@@ -12,6 +12,7 @@ extension.
 Synopsis: <trigger> [delay|throw] <query>"""
 
 import json
+import re
 
 from albertv0 import *
 import os
@@ -61,7 +62,7 @@ def handleQuery(query):
     item.text = 'To open URL for %s' % query.string
 
     for k, v in url_pairs.items():
-        if query.string in k:
+        if re.search(query.string.strip(), k, re.IGNORECASE):
             item = Item(id=__prettyname__,
                         icon=os.path.dirname(__file__)+"/plugin.png",
                         text=k,

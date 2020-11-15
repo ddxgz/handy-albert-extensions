@@ -15,6 +15,7 @@ __version__ = "1.0"
 __trigger__ = "code "
 __author__ = "Cong Peng"
 
+icon_path = iconLookup('inode-directory')
 projects_file = str(Path.home()) + "/code"
 projects = []
 
@@ -32,7 +33,7 @@ def handleQuery(query):
     for project in projects:
         if re.search(stripped, project, re.IGNORECASE):
             items.append(Item(id=__prettyname__,# + project,
-                              # icon=iconPath,
+                              icon=icon_path,
                               text=project,
                               subtext="Group",
                               completion=query.rawString,

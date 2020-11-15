@@ -7,7 +7,7 @@ import os
 import re
 from pathlib import Path
 
-from albertv0 import *
+from albertv0 import iconLookup, Item, info, ProcAction, TermAction
 
 __iid__ = "PythonInterface/v0.1"
 __prettyname__ = "VS Code Projects"
@@ -32,7 +32,7 @@ def handleQuery(query):
     items = []
     for project in projects:
         if re.search(stripped, project, re.IGNORECASE):
-            items.append(Item(id=__prettyname__,# + project,
+            items.append(Item(id=__prettyname__ + project,
                               icon=icon_path,
                               text=project,
                               subtext="Group",
@@ -40,6 +40,11 @@ def handleQuery(query):
                               actions=[
                                   ProcAction(text="Open project in VS Code",
                                              commandline=["code", project],
-                                             cwd=projects_file)
+                                             cwd=projects_file),
+                                  TermAction(text='Open in terminal',
+                                             commandline=['ls'],
+                                             cwd=f'{projects_file}/{project}',
+                                             shell=True,
+                                             behavior=TermAction.CloseBehavior.DoNotClose)
                               ]))
     return items
